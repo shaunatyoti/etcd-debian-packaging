@@ -1,9 +1,32 @@
 #!/bin/bash
 
+ETCD_VERSION=${ETCD_VERSION:-2.2.2}
+REV=${REV:-2}
+
+rm -f etcd/builds/etcd_$ETCD_VERSION_amd64.deb
+rm -rf etcd/source/etcd-v$ETCD_VERSION
+
+mkdir -p etcd/builds
+mkdir -p etcd/source
+mkdir -p etcd/downloads
+
+cd etcd/downloads
+
+if [ -f etcd-v$ETCD_VERSION-linux-amd64.tar.gz ]; then
+  echo "already have the download ..."
+else
+  wget https://github.com/coreos/etcd/releases/download/v$ETCD_VERSION/etcd-v$ETCD_VERSION-linux-amd64.tar.gz
+fi
+
+cd ../source
+tar zxf ../downloads/etcd-v$ETCD_VERSION-linux-amd64.tar.gz
+cd ../..
+
 # systemd version
 fpm -s dir -n "etcd" \
 -p etcd/builds \
--C ./etcd -v 2.2.1-1 \
+-C etcd \
+-v $ETCD_VERSION-$REV \
 -t deb \
 -a amd64 \
 -d "dpkg (>= 1.17)" \
@@ -16,7 +39,7 @@ fpm -s dir -n "etcd" \
 --maintainer "yoti <noc@yoti.com>" \
 --vendor "yoti ltd" \
 --description "Etcd binaries and services" \
-source/etcd/etcd=/usr/bin/etcd \
-source/etcd/etcdctl=/usr/bin/etcdctl \
+source/etcd-v$ETCD_VERSION-linux-amd64/etcd=/usr/bin/etcd \
+source/etcd-v$ETCD_VERSION-linux-amd64/etcdctl=/usr/bin/etcdctl \
 services/systemd/etcd.service=/lib/systemd/system/etcd.service \
 config/systemd/etcd.conf=/etc/etcd/etcd.conf
