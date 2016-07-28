@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ETCD_VERSION=${ETCD_VERSION:-3.0.3}
+ETCD_VERSION=${ETCD_VERSION:-3.0.4}
 REV=${REV:-1}
 
 rm -f etcd/builds/etcd_$ETCD_VERSION_amd64.deb
