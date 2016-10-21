@@ -34,7 +34,6 @@ fpm -s dir -n "etcd" \
 --before-install etcd/scripts/deb/systemd/before-install.sh \
 --after-remove etcd/scripts/deb/systemd/after-remove.sh \
 --before-remove etcd/scripts/deb/systemd/before-remove.sh \
---config-files etc/etcd \
 --license "Apache Software License 2.0" \
 --maintainer "yoti <noc@yoti.com>" \
 --vendor "yoti ltd" \
