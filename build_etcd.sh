@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ETCD_VERSION=${ETCD_VERSION:-3.0.12}
-REV=${REV:-1}
+REV=${REV:-2}
 
 rm -f etcd/builds/etcd_$ETCD_VERSION_amd64.deb
 rm -rf etcd/source/etcd-v$ETCD_VERSION
@@ -41,5 +41,4 @@ fpm -s dir -n "etcd" \
 --description "Etcd binaries and services" \
 source/etcd-v$ETCD_VERSION-linux-amd64/etcd=/usr/bin/etcd \
 source/etcd-v$ETCD_VERSION-linux-amd64/etcdctl=/usr/bin/etcdctl \
-services/systemd/etcd.service=/lib/systemd/system/etcd.service \
-config/systemd/etcd.conf=/etc/etcd/etcd.conf
+services/systemd/etcd.service=/lib/systemd/system/etcd.service
